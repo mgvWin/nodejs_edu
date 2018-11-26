@@ -1,0 +1,33 @@
+{
+  "name": "node_js_education",
+  "version": "1.0.0",
+  "description": "Node.js education project for myself",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo 'No test specified'",
+    "start": "nodemon --exec babel-node app.js"
+  },
+  "author": "Maksym Honchar",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/register": "^7.0.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "nodemon": "^1.18.6",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.15.2"
+  },
+  "dependencies": {},
+  "pre-commit": [
+    "test"
+  ]
+}
