@@ -2,9 +2,10 @@
   "env": {
     "node": true
   },
-  "extends": ["airbnb", "prettier"],
-  "plugins": ["prettier"],
+  "extends": [ "airbnb", "prettier" ],
+  "plugins": [ "prettier" ],
   "rules": {
-    "prettier/prettier": ["error"]
+    "prettier/prettier": [ "error" ],
+    "import/extensions": [ "never" ]
   }
 }
