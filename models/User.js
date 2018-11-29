@@ -1,6 +1,7 @@
+import { Logger } from '../utils';
+
 export default class User {
   constructor() {
-    /* eslint-disable-next-line */
-    console.log('User module');
+    Logger.console('User module');
   }
 }

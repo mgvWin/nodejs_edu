@@ -1,6 +1,7 @@
+import { Logger } from '../utils';
+
 export default class Product {
   constructor() {
-    /* eslint-disable-next-line */
-    console.log('Product module');
+    Logger.console('Product module');
   }
 }
