@@ -1,8 +1,8 @@
 # Node.js education project
 
 ## Dependencies
-* node.js >= 8.11.4
-* npm >= 6.4.0
+* node.js >= 10.14.1
+* npm >= 6.4.1
 
 ## Development
 
