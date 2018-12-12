@@ -33,7 +33,7 @@
     "lodash": "^4.17.11"
   },
   "pre-commit": [
-    //"lint",
+    "lint",
     "test"
   ]
 }

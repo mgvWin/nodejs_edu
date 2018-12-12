@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-Type,SKU,Name,Published,Is featured?,Visibility in catalog
-"simple, downloadable, virtual",WOO-SINGLE-2,Woo Single #2,1,0,visible
-"simple, downloadable, virtual",WOO-SINGLE-1,Woo Single #1,1,0,visible
-grouped,WOO-SINGLES,Woo Singles,1,0,visible
-"simple, virtual",WOO-ALBUM-4,Woo Album #4,1,0,visible
-"simple, virtual",WOO-ALBUM-3,Woo Album #3,1,0,visible
-"simple, virtual",WOO-ALBUM-2,Woo Album #2,1,0,visible
-"simple, virtual",WOO-ALBUM-1,Woo Album #1,1,0,visible
-simple,POSTER-WOO-LOGO,Woo Logo,1,0,visible
-simple,POSTER-WOO-NINJA,Woo Ninja,1,0,visible
-=======
 Type,SKU,Name,Published,Is featured,Visibility in catalog
 "simple, downloadable, virtual",WOO-SINGLE-2,Woo Single #2,1,0,visible
 "simple, downloadable, virtual",WOO-SINGLE-1,Woo Single #1,1,0,visible
->>>>>>> c4c40e3b70c417c232420bf5e10b57d70da50ceb

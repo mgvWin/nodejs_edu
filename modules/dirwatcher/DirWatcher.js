@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import EventEmitter from 'events';
 import path from 'path';
 
 import DirFile from './DirFile';
@@ -23,7 +23,8 @@ export class DirWatcher extends EventEmitter {
   listenerCount(eventType) {
     const watcher = watchers.get(this.dirPath);
     return watcher && watcher === this
-      ? super.listenerCount(eventType) : watcher.listenerCount(eventType);
+      ? super.listenerCount(eventType)
+      : watcher.listenerCount(eventType);
   }
 
   watch(dirPath, delay = DEFAULT_WATCH_DELAY) {
@@ -34,21 +35,19 @@ export class DirWatcher extends EventEmitter {
     this.dirPath = path.isAbsolute(dirPath) ? dirPath : path.resolve(dirPath);
 
     if (watchers.has(this.dirPath)) {
-      watchers.get(this.dirPath)
-        .on(DIR_WATCHER_EVENTS.CHANGED, data => {
-            this.emit(DIR_WATCHER_EVENTS.CHANGED, data);
-        });
-      
+      watchers.get(this.dirPath).on(DIR_WATCHER_EVENTS.CHANGED, data => {
+        this.emit(DIR_WATCHER_EVENTS.CHANGED, data);
+      });
+
       return;
     }
 
     watchers.set(this.dirPath, this);
 
-    this.getDirFilePaths()
-      .then(files => {
-        this.dirFiles = files.map(filePath => new DirFile(filePath));
-        this.setWatcher(delay);
-      });
+    this.getDirFilePaths().then(files => {
+      this.dirFiles = files.map(filePath => new DirFile(filePath));
+      this.setWatcher(delay);
+    });
   }
 
   async getDirFilePaths() {
@@ -83,13 +82,15 @@ export class DirWatcher extends EventEmitter {
         return;
       }
 
-      this.dirFiles.forEach(file => (async () => {
-        const isFileChanged = await file.isChanged();
+      this.dirFiles.forEach(file =>
+        (async () => {
+          const isFileChanged = await file.isChanged();
 
-        if (isFileChanged) {
-          this.emit(DIR_WATCHER_EVENTS.CHANGED, file.filePath);
-        }
-      })());
+          if (isFileChanged) {
+            this.emit(DIR_WATCHER_EVENTS.CHANGED, file.filePath);
+          }
+        })()
+      );
     }, delay);
   }
 }

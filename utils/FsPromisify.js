@@ -7,19 +7,19 @@ const fsReadFile = promisify(fs.readFile);
 const fsExixts = promisify(fs.exists);
 
 export default class FsPromisify {
-  static stat(path, options) {
-    return fsStat(path, options);
+  static stat(path) {
+    return fsStat(path);
   }
 
-  static readdir(path, options) {
-    return fsReadDir(path, options);
+  static readdir(path) {
+    return fsReadDir(path);
   }
 
-  static readFile(path, options) {
-    return fsReadFile(path, options);
+  static readFile(path) {
+    return fsReadFile(path);
   }
 
-  static exists(path, options) {
-    return fsExixts(path, options);
+  static exists(path) {
+    return fsExixts(path);
   }
 }

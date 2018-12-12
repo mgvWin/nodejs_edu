@@ -1,7 +1,7 @@
 import { promisify } from 'util';
 import _ from 'lodash';
 
-import { parse as parseSync } from 'csv-parse/lib/sync';
+import { default as parseSync } from 'csv-parse/lib/sync';
 import parse from 'csv-parse';
 
 const parsePromise = promisify(parse);
@@ -14,14 +14,12 @@ const PARSER_CONFIG = {
 function prepareOutputData(output) {
   const headers = output[0];
 
-  return output
-    .slice(1)
-    .map(props => _.zipObject(headers, props));
+  return output.slice(1).map(props => _.zipObject(headers, props));
 }
 
 export default class CSVParser {
-  static parseSync(data) {
-    const output = parseSync(data, PARSER_CONFIG);
+  static parseSync(input) {
+    const output = parseSync(input, PARSER_CONFIG);
     return prepareOutputData(output);
   }
 
