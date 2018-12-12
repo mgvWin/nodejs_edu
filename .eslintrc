@@ -10,6 +10,8 @@
     "import/extensions": [ "never" ],
     "no-console": "error",
     "class-methods-use-this": "off",
-    "no-return-await": "off"
+    "no-return-await": "off",
+    "no-restricted-syntax": "off",
+    "import/no-named-default": "off"
   }
 }

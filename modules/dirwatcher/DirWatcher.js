@@ -1,57 +1,95 @@
-import { fs } from 'fs';
 import { EventEmitter } from 'events';
-import { path } from 'path';
+import path from 'path';
+
+import DirFile from './DirFile';
+import { FsPromisify } from '../../utils';
 
 const DEFAULT_WATCH_DELAY = 1000; // ms
 
-const dirWatchers = {};
+const watchers = new Map();
 
-async function pathExists(path) {
-  return await fs.exists(path);
-}
+export const DIR_WATCHER_EVENTS = {
+  CHANGED: 'dirwatcher:changed'
+};
 
-async function readPathStat(path) {
-  return await fs.stat(path);
-}
-
-class ModifyWatcher extends EventEmitter {
-  constructor(relativePath, callback, delay = DEFAULT_WATCH_DELAY) {
+export class DirWatcher extends EventEmitter {
+  constructor() {
     super();
 
-    this.absolutePath = path.resolve(relativePath);
-
-    this.watchInterval = setInterval(() => {
-      if (!this.listenerCount('modifyWatcher:changed')) {
-        return;
-      }
-
-      const isPathExist = pathExists(this.absolutePath);
-      if (isPathExist) {
-        this.emit('modifyWatcher:changed', this.absolutePath);
-      }
-
-      this.destroy();
-    }, delay);
+    this.dirPath = null;
+    this.dirFiles = [];
   }
 
-  destroy() {
-    clearInterval(this.watchInterval);
-    delete dirWatchers[this.absolutePath];
+  listenerCount(eventType) {
+    const watcher = watchers.get(this.dirPath);
+    return watcher && watcher === this
+      ? super.listenerCount(eventType) : watcher.listenerCount(eventType);
   }
-}
 
-export default class DirWatcher {
-  watch(path, delay = DEFAULT_WATCH_DELAY) {
-    if (!dirWatchers[path]) {
-      dirWatchers[path] = new Map();
-    }
-
-    if (dirWatchers[path].has(this)) {
+  watch(dirPath, delay = DEFAULT_WATCH_DELAY) {
+    if (this.absolutePath) {
       return;
     }
 
-    dirWatchers[path].set(this, setInterval(() => {}, delay));
+    this.dirPath = path.isAbsolute(dirPath) ? dirPath : path.resolve(dirPath);
+
+    if (watchers.has(this.dirPath)) {
+      watchers.get(this.dirPath)
+        .on(DIR_WATCHER_EVENTS.CHANGED, data => {
+            this.emit(DIR_WATCHER_EVENTS.CHANGED, data);
+        });
+      
+      return;
+    }
+
+    watchers.set(this.dirPath, this);
+
+    this.getDirFilePaths()
+      .then(files => {
+        this.dirFiles = files.map(filePath => new DirFile(filePath));
+        this.setWatcher(delay);
+      });
   }
 
-  destroy() {}
+  async getDirFilePaths() {
+    const isDirExists = await FsPromisify.exists(this.dirPath);
+
+    if (!isDirExists) {
+      return [];
+    }
+
+    const resolvedPaths = [];
+
+    for await (const fileName of await FsPromisify.readdir(this.dirPath)) {
+      const filePath = path.join(this.dirPath, fileName);
+      const isFile = await this.isFile(filePath);
+
+      if (isFile) {
+        resolvedPaths.push(filePath);
+      }
+    }
+
+    return resolvedPaths;
+  }
+
+  async isFile(filePath) {
+    const fileStat = await FsPromisify.stat(filePath);
+    return fileStat.isFile();
+  }
+
+  setWatcher(delay) {
+    setInterval(() => {
+      if (!this.listenerCount(DIR_WATCHER_EVENTS.CHANGED)) {
+        return;
+      }
+
+      this.dirFiles.forEach(file => (async () => {
+        const isFileChanged = await file.isChanged();
+
+        if (isFileChanged) {
+          this.emit(DIR_WATCHER_EVENTS.CHANGED, file.filePath);
+        }
+      })());
+    }, delay);
+  }
 }

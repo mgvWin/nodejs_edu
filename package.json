@@ -28,9 +28,12 @@
     "pre-commit": "^1.2.2",
     "prettier": "^1.15.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "csv-parse": "^4.1.0",
+    "lodash": "^4.17.11"
+  },
   "pre-commit": [
-    "lint",
+    //"lint",
     "test"
   ]
 }
