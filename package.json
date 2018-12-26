@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo 'No test specified'",
     "start": "nodemon --exec NODE_ENV=development babel-node app.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "streams": "babel-node utils/streams/streams.js"
   },
   "author": "Maksym Honchar",
   "license": "ISC",
@@ -30,7 +31,8 @@
   },
   "dependencies": {
     "csv-parse": "^4.1.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "yargs": "^12.0.5"
   },
   "pre-commit": [
     "lint",

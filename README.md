@@ -6,8 +6,12 @@
 
 ## Development
 
-Run `npm start` for development by automatically restarting the app when file changes in the directory are detected.
+Run `npm run start` for development by automatically restarting the app when file changes in the directory are detected.
 
 ## Running unit tests
 
-Run `npm test` to execute the unit tests.
+Run `npm run test` to execute the unit tests.
+
+## Running streams
+
+Run `npm run streams [-- <options>]`.
