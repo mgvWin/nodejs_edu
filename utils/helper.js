@@ -3,7 +3,7 @@ import path from 'path';
 import { isBuffer } from 'util';
 import { default as readlinePipe } from 'readline';
 
-import FsPromisify from '../FsPromisify.js';
+import FsPromisify from './FsPromisify.js';
 
 export function curry(func, ...args) {
   return func.bind(null, ...args);
@@ -142,4 +142,19 @@ export function writeFile(content, fileName, dirPath) {
       reject(new Error('Invalid non-string/buffer chunk'));
     }
   });
+}
+
+export function pipe(...optionsAsync) {
+  return async data => {
+    let acc = data;
+    try {
+      for await (const func of optionsAsync) {
+        acc = await func(acc);
+      }
+    } catch (err) {
+      throw err;
+    }
+
+    return acc;
+  };
 }

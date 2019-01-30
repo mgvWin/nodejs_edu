@@ -11,28 +11,14 @@ import {
   parsePath,
   writeFile,
   getFolderFiles,
-  curry
-} from './helper.js';
+  curry,
+  pipe
+} from '../helper.js';
 import CSVParser from '../CSVParser.js';
 import Logger from '../Logger';
 
 import MESSAGES from './messages.js';
 import OPTIONS from './options.js';
-
-function pipe(...optionsAsync) {
-  return async data => {
-    let acc = data;
-    try {
-      for await (const func of optionsAsync) {
-        acc = await func(acc);
-      }
-    } catch (err) {
-      throw err;
-    }
-
-    return acc;
-  };
-}
 
 function readCommandOption(optionName, options) {
   if (!options[optionName]) {

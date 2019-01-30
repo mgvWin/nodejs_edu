@@ -1,3 +1,4 @@
 {
-  "appName": "Node.js Homework Application."
+  "appName": "Node.js Homework Application.",
+  "port": 4200
 }

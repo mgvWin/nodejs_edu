@@ -7,7 +7,11 @@
     "test": "echo 'No test specified'",
     "start": "nodemon --exec NODE_ENV=development babel-node app.js",
     "lint": "eslint .",
-    "streams": "babel-node utils/streams/streams.js"
+    "streams": "babel-node utils/streams/streams.js",
+    "json-server": "babel-node http-servers/json-server.js",
+    "html-server": "babel-node http-servers/html-server.js",
+    "plain-server": "babel-node http-servers/plain-text-server.js",
+    "echo-server": "babel-node http-servers/echo-server.js"
   },
   "author": "Maksym Honchar",
   "license": "ISC",
